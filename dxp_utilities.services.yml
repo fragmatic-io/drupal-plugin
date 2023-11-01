@@ -1,0 +1,4 @@
+services:
+  dxp_css.api_css:
+    class: Drupal\dxp_utilities\Services\ApiService
+    public: true

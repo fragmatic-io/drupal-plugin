@@ -1,0 +1,7 @@
+dxp_utilities.dxp_settings:
+  path: "/admin/config/development/dxp-settings"
+  defaults:
+    _form: '\Drupal\dxp_utilities\Form\DxpSettingsForm'
+    _title: "DXP Settings Form"
+  requirements:
+    _permission: "administrator"

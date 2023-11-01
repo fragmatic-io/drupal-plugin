@@ -1,0 +1,26 @@
+<?php
+
+/**
+ * @file
+ * Provides functionality for handling dxp utility functionality.
+ */
+
+/**
+ * Implements hook_page_attachments().
+ */
+function dxp_utilities_page_attachments(array &$attachments) {
+  $config = \Drupal::config('dxp_utilities.middleware.settings');
+  $attachments['#attached']['drupalSettings']['dxpOptions'] = [
+    'dxpScope' => $config->get('dxp_scope'),
+    'dxpUrl' => $config->get('dxp_url'),
+    'dxpMiddlewareURL' => $config->get('dxp_middleware_url'),
+    'dxpDashboardURL' => $config->get('dxp_dashboard_url'),
+    'dxpTags' => explode(' | ', $config->get('dxp_tags')),
+    'dxpCategories' => explode(' | ', $config->get('dxp_categories')),
+    'dxpSessionExpiry' => (int) $config->get('dxp_session_expiry'),
+    'dxpConsentCookieName' => $config->get('dxp_consent_cookie_name'),
+    'dxpConsentContinent' => explode(' | ', $config->get('dxp_consent_continent')),
+    'dxpTimeoutInMilliseconds' => (int) $config->get('dxp_timeout_in_milliseconds'),
+    'dxpProd' => $config->get('dxp_prod'),
+  ];
+}
