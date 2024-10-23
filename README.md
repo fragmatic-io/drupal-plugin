@@ -7,8 +7,8 @@ Tracker and media integration.
 To install the plugin, clone the repository from GitHub by running the following commands:
 
 ```bash
-cd /path/to/your/project/root
 # Clone the repository from GitHub
+cd /path/to/your/project/root
 git clone https://github.com/fragmatic-io/drupal-plugin.git web/modules/custom/controltower 
 ```
 
