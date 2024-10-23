@@ -9,9 +9,9 @@ To install the plugin, clone the repository from GitHub by running the following
 ```bash
 cd /path/to/your/drupal/site
 # Clone the repository from GitHub
-git clone https://github.com/fragmatic-io/drupal-plugin.git modules/custom/drupal-plugin
+git clone https://github.com/fragmatic-io/drupal-plugin.git modules/custom/controltower 
 # Navigate to the plugin directory
-cd modules/custom/drupal-plugin
+cd modules/custom/controltower
 # Install dependencies
 composer install
 ```
@@ -35,16 +35,12 @@ Add the following code snippet in the Twig file that loads for every page to ena
 ```twig
 <!-- CT: start (v2.1)  -->
 {% if dxp_middleware_url and dxp_scope %}
-  {#
-    Update in the next release and deprecate style with its preprocessing
-    <link
-      id="ct-css"
-      rel="stylesheet"
-      type="text/css"
-      href="{{ dxp_middleware_url }}/js-app/css/ct-no-flicker.css"
-    />
-  #}
-  <style data-dxpstyle="no-flicker"> {{ style_css|raw }}</style>
+  <link
+    id="ct-css"
+    rel="stylesheet"
+    type="text/css"
+    href="{{ dxp_middleware_url }}/js-app/css/ct-no-flicker.css"
+  />
   <script
     id="ct-tracker"
     src="{{ dxp_middleware_url }}/js-app/js/{{ dxp_scope }}-tracker.js"
@@ -68,18 +64,6 @@ function leevcb_preprocess_html(&$variables)
   $config = \Drupal::config('dxp_utilities.middleware.settings');
   $variables['dxp_middleware_url'] = $config->get('dxp_middleware_url');
   $variables['dxp_scope'] = $config->get('dxp_scope');
-  
-  // Getting the value from the cache
-  $cacheId = "dxp_css:api_data";
-  if ($cache = \Drupal::cache()->get($cacheId)) {
-    $variables['style_css'] = $cache->data;
-  }
-
-  // Getting the JS from the cache
-  $cacheId_js = "dxp_js:api_data";
-  if ($cache_js = \Drupal::cache()->get($cacheId_js)) {
-    $variables['script_js'] = $cache_js->data;
-  }
   
   // Get the current path
   $current_path = \Drupal::service('path.current')->getPath();
