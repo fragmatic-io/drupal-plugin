@@ -7,13 +7,9 @@ Tracker and media integration.
 To install the plugin, clone the repository from GitHub by running the following commands:
 
 ```bash
-cd /path/to/your/drupal/site
+cd /path/to/your/project/root
 # Clone the repository from GitHub
-git clone https://github.com/fragmatic-io/drupal-plugin.git modules/custom/controltower 
-# Navigate to the plugin directory
-cd modules/custom/controltower
-# Install dependencies
-composer install
+git clone https://github.com/fragmatic-io/drupal-plugin.git web/modules/custom/controltower 
 ```
 
 Since the plugin is not officially posted, you will need to install it directly from the GitHub repository.
@@ -23,42 +19,21 @@ Since the plugin is not officially posted, you will need to install it directly 
 After installing the plugin, enable it using Drush or the Drupal admin interface:
 
 ```bash
-drush en drupal_plugin -y
+drush en dxp_utilities -y
 ```
 
 Alternatively, you can navigate to the "Extend" section in the Drupal admin panel, find the plugin, and enable it.
 
-### 3. Add Code Snippet to the Twig File
 
-Add the following code snippet in the Twig file that loads for every page to enable the tracker and CSS integration:
+### 3. Add Preprocessing HTML Hook
 
-```twig
-<!-- CT: start (v2.1)  -->
-{% if dxp_middleware_url and dxp_scope %}
-  <link
-    id="ct-css"
-    rel="stylesheet"
-    type="text/css"
-    href="{{ dxp_middleware_url }}/js-app/css/ct-no-flicker.css"
-  />
-  <script
-    id="ct-tracker"
-    src="{{ dxp_middleware_url }}/js-app/js/{{ dxp_scope }}-tracker.js"
-    defer>
-  </script>
-{% endif %}
-<!-- CT: end -->
-```
-
-### 4. Add Preprocessing HTML Hook
-
-Add the following preprocessing hook to either add the CT code or configure HTML preprocessing:
+Implement a hook_preprocess_html() or update existing(If any) in YOUR_THEME_NAME.theme file. This will pass the variables to the twig template.
 
 ```php
 /**
  * Implements hook_preprocess_html().
  */
-function leevcb_preprocess_html(&$variables)
+function YOUR_THEME_NAME_preprocess_html(&$variables)
 {
   // <---- CT: start (v2.1) ---->
   $config = \Drupal::config('dxp_utilities.middleware.settings');
@@ -78,5 +53,27 @@ function leevcb_preprocess_html(&$variables)
   }
   // <---- CT: end ---->
 }
+```
+
+### 4. Add Code Snippet to the twig templates
+
+Add the following code snippet in the head section of html.html.twig file in your theme to enable the tracker and CSS integration:
+
+```twig
+<!-- CT: start (v2.1)  -->
+{% if dxp_middleware_url and dxp_scope %}
+  <link
+    id="ct-css"
+    rel="stylesheet"
+    type="text/css"
+    href="{{ dxp_middleware_url }}/js-app/css/ct-no-flicker.css"
+  />
+  <script
+    id="ct-tracker"
+    src="{{ dxp_middleware_url }}/js-app/js/{{ dxp_scope }}-tracker.js"
+    defer
+  </script>
+{% endif %}
+<!-- CT: end -->
 ```
 
