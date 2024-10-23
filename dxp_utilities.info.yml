@@ -2,4 +2,4 @@ name: DXP Utilities
 type: module
 description: Provides helping functions for the site.
 package: Custom
-core_version_requirement: ^8 || ^9 || ^10
+core_version_requirement: ^8 || ^9 || ^10 || ^11
