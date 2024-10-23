@@ -1,6 +1,4 @@
-# Drupal Plugin Installation Guide
-
-Tracker and media integration.
+# Drupal Plugin & Tracker Script Installation Guide
 
 ### 1. Install the Drupal Plugin
 
@@ -16,7 +14,7 @@ Since the plugin is not officially posted, you will need to install it directly 
 
 ### 2. Enable the Plugin
 
-After installing the plugin, enable it using Drush or the Drupal admin interface:
+After installing the plugin, enable it using Drush:
 
 ```bash
 drush en dxp_utilities -y
@@ -57,7 +55,7 @@ function YOUR_THEME_NAME_preprocess_html(&$variables)
 
 ### 4. Add Code Snippet to the twig templates
 
-Add the following code snippet in the head section of html.html.twig file in your theme to enable the tracker and CSS integration:
+Add the following code snippet in the head section of html.html.twig file in your theme and in any other twig templates you are using to enable the tracker and CSS integration:
 
 ```twig
 <!-- CT: start (v2.1)  -->
