@@ -12,7 +12,7 @@ git clone https://github.com/fragmatic-io/drupal-plugin.git web/modules/custom/c
 
 Since the plugin is not officially posted, you will need to install it directly from the GitHub repository.
 
-#### * If you encounter an error about nested Git repositories, you can skip cloning the repo and instead download the zip file from [this link](https://github.com/fragmatic-io/drupal-plugin/releases/download/Name/dxp_utilities.services.zip).
+#### * If you encounter an error about nested Git repositories, you can skip cloning the repo and instead download the zip file from [this link](https://github.com/fragmatic-io/drupal-plugin/releases/download/Name/dxp_utilities.services.zip). And then extract the downloaded zip in your web/modules/custom/[module_name] directory.
 
 ### 2. Enable the Plugin
 
