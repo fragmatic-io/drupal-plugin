@@ -71,7 +71,7 @@ Add the following code snippet in the head section of html.html.twig file in you
   <script
     id="ct-tracker"
     src="{{ dxp_middleware_url }}/js-app/js/{{ dxp_scope }}-tracker.js"
-    defer
+    defer>
   </script>
 {% endif %}
 <!-- CT: end -->
