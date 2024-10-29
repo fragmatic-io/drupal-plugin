@@ -12,6 +12,8 @@ git clone https://github.com/fragmatic-io/drupal-plugin.git web/modules/custom/c
 
 Since the plugin is not officially posted, you will need to install it directly from the GitHub repository.
 
+** * If you encounter an error about nested Git repositories, you can skip cloning the repo and instead download the zip file from this link.**
+
 ### 2. Enable the Plugin
 
 After installing the plugin, enable it using Drush:
