@@ -46,10 +46,10 @@ function YOUR_THEME_NAME_preprocess_html(&$variables)
   
   // Checking for the front page and then assigning the values respectively
   if (\Drupal::service('path.matcher')->isFrontPage()) {
-    $variables['attributes']['class'][] = 'home';
+    $variables['attributes']['class'][] = 'ct_home';
   } else {
     $class = str_replace("/", "-", $internal_path);
-    $variables['attributes']['class'][] = substr($class, 1);
+    $variables['attributes']['class'][] = 'ct_' . substr($class, 1);
   }
   // <---- CT: end ---->
 }
