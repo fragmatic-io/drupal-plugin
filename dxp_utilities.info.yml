@@ -4,5 +4,10 @@ description: Provides helping functions for the site.
 package: Custom
 core_version_requirement: ^8 || ^9 || ^10 || ^11
 dependencies:
+  - image
+  - media
+  - rest
+  - serialization
+  - user
   - basic_auth
   - jsonapi
