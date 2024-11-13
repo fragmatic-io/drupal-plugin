@@ -57,65 +57,47 @@ class GetMedia extends ResourceBase {
     $current_page = \Drupal::request()->query->get('page', 0);
     $name_filter = \Drupal::request()->query->get('name', NULL);
 
-    // Negative page number ko handle karna
     $current_page = ($current_page < 0) ? 0 : $current_page;
     $start = $current_page * $items_per_page;
 
-    // Media storage ko access karna
     $media_storage = $this->entityTypeManager->getStorage('media');
     $query = $media_storage->getQuery()->accessCheck(TRUE);
 
-    // Agar name filter diya gaya hai to use query mein lagayenge
     if (!empty($name_filter)) {
       $query->condition('name', '%' . $name_filter . '%', 'LIKE');
     }
 
-    // Sorting ko add karte hain taaki newest pehle aaye
     $query->sort('created', 'DESC');
-
-    // Total count for pagination
-    $count_query = clone $query;  // Alag se ek count query create karte hain
+    $count_query = clone $query;
     $total_count = $count_query->count()->execute();
     $total_pages = ceil($total_count / $items_per_page);
-
-    // Range lagake media items fetch karna
     $media_ids = $query->range($start, $items_per_page)->execute();
 
-    // Prepare media results.
     $results = [];
 
     if (!empty($media_ids)) {
       $media_entities = $media_storage->loadMultiple($media_ids);
       foreach ($media_entities as $media) {
-        // Assuming 'field_media_image' is the image field.
         $field_media_image = $media->get('field_media_image')->entity;
-
-        // Generate the absolute URL for the image (full URL with domain)
         $image_url = $field_media_image ? $this->fileUrlGenerator->generateAbsoluteString($field_media_image->getFileUri()) : '';
 
-        // Manually generate the relative path
         if ($field_media_image) {
-          // Get the file URI, which is like 'public://2024-11/Screenshot.jpg'
           $file_uri = $field_media_image->getFileUri();
-
-          // Remove the 'public://' part
           $relative_path = str_replace('public://', '/sites/default/files/', $file_uri);
         } else {
           $relative_path = '';
         }
 
-        // Prepare the response data
         $results[] = [
-          'field_media_image' => $relative_path,  // This should have the relative path
+          'field_media_image' => $relative_path,
           'name' => $media->label(),
           'status' => $media->isPublished() ? 'On' : 'Off',
           'created' => \Drupal::service('date.formatter')->format($media->getCreatedTime(), 'custom', 'D, m/d/Y - H:i'),
           'mid' => $media->id(),
-          'link' => $image_url,  // Full URL with domain
+          'link' => $image_url,
         ];
       }
 
-      // Prepare the response.
       $response_data = [
         'results' => $results,
         'pager' => [
