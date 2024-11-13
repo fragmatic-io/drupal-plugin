@@ -55,22 +55,37 @@ class GetMedia extends ResourceBase {
     // Set the number of items per page and the current page.
     $items_per_page = 10;
     $current_page = \Drupal::request()->query->get('page', 0);
+    $name_filter = \Drupal::request()->query->get('name', NULL);
+
+    // Negative page number ko handle karna
+    $current_page = ($current_page < 0) ? 0 : $current_page;
     $start = $current_page * $items_per_page;
 
-    // Fetch media entities.
+    // Media storage ko access karna
     $media_storage = $this->entityTypeManager->getStorage('media');
     $query = $media_storage->getQuery()->accessCheck(TRUE);
+
+    // Agar name filter diya gaya hai to use query mein lagayenge
+    if (!empty($name_filter)) {
+      $query->condition('name', '%' . $name_filter . '%', 'LIKE');
+    }
+
+    // Sorting ko add karte hain taaki newest pehle aaye
+    $query->sort('created', 'DESC');
+
+    // Total count for pagination
+    $count_query = clone $query;  // Alag se ek count query create karte hain
+    $total_count = $count_query->count()->execute();
+    $total_pages = ceil($total_count / $items_per_page);
+
+    // Range lagake media items fetch karna
     $media_ids = $query->range($start, $items_per_page)->execute();
 
-    // Total count of media items.
-    $total_count = $query->count()->execute();
-    $total_pages = ceil($total_count / $items_per_page);
+    // Prepare media results.
+    $results = [];
 
     if (!empty($media_ids)) {
       $media_entities = $media_storage->loadMultiple($media_ids);
-
-      // Prepare media results.
-      $results = [];
       foreach ($media_entities as $media) {
         // Assuming 'field_media_image' is the image field.
         $field_media_image = $media->get('field_media_image')->entity;
@@ -114,8 +129,17 @@ class GetMedia extends ResourceBase {
       $status = 200;
     }
     else {
-      $response_data = ['message' => 'No media entities found.'];
-      $status = 404;
+      $response_data = [
+        'results' => $results,
+        'pager' => [
+          'count' => $total_count,
+          'pages' => $total_pages,
+          'items_per_page' => $items_per_page,
+          'current_page' => $current_page,
+          'next_page' => ($current_page + 1) < $total_pages ? $current_page + 1 : NULL,
+        ]
+        ];
+      $status = 200;
     }
 
     return new ModifiedResourceResponse($response_data, $status);
