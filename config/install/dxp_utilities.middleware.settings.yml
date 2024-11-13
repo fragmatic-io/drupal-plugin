@@ -1,11 +1,11 @@
 dxp_scope:
-dxp_url:
+# dxp_url:
 dxp_middleware_url:
-dxp_dashboard_url:
-dxp_tags:
-dxp_categories:
-dxp_session_expiry:
-dxp_consent_cookie_name:
-dxp_consent_continent:
-dxp_timeout_in_milliseconds:
+# dxp_dashboard_url:
+# dxp_tags:
+# dxp_categories:
+# dxp_session_expiry:
+# dxp_consent_cookie_name:
+# dxp_consent_continent:
+# dxp_timeout_in_milliseconds:
 dxp_prod:
