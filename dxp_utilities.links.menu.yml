@@ -1,6 +1,6 @@
 dxp_utilities.dxp_settings:
-  title: 'DXP Settings'
-  description: 'DXP Settings Form'
+  title: 'ControlTower'
+  description: 'ControlTower Tracker Settings'
   route_name: dxp_utilities.dxp_settings
   parent: system.admin_config_development
   weight: 0

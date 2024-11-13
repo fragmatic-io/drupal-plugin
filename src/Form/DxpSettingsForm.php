@@ -50,7 +50,7 @@ class DxpSettingsForm extends ConfigFormBase {
     $config = $this->config('dxp_utilities.middleware.settings');
     $form['dxp_scope'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('DXP Scope'),
+      '#title' => $this->t('Scope'),
       '#size' => 100,
       '#required' => TRUE,
       '#default_value' => $config->get('dxp_scope'),
@@ -127,7 +127,7 @@ class DxpSettingsForm extends ConfigFormBase {
 
     $form['dxp_prod'] = [
       '#type' => 'checkbox',
-      '#title' => $this->t('DXP Prod'),
+      '#title' => $this->t('Production'),
       '#size' => 100,
       '#default_value' => $config->get('dxp_prod'),
     ];

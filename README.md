@@ -7,7 +7,7 @@ To install the plugin, clone the repository from GitHub by running the following
 ```bash
 # Clone the repository from GitHub
 cd /path/to/your/project/root
-git clone https://github.com/fragmatic-io/drupal-plugin.git web/modules/custom/controltower 
+git clone https://github.com/fragmatic-io/drupal-plugin.git web/modules/custom/controltower
 ```
 
 Since the plugin is not officially posted, you will need to install it directly from the GitHub repository.
@@ -39,11 +39,11 @@ function YOUR_THEME_NAME_preprocess_html(&$variables)
   $config = \Drupal::config('dxp_utilities.middleware.settings');
   $variables['dxp_middleware_url'] = $config->get('dxp_middleware_url');
   $variables['dxp_scope'] = $config->get('dxp_scope');
-  
+
   // Get the current path
   $current_path = \Drupal::service('path.current')->getPath();
   $internal_path = \Drupal::service('path_alias.manager')->getAliasByPath($current_path);
-  
+
   // Checking for the front page and then assigning the values respectively
   if (\Drupal::service('path.matcher')->isFrontPage()) {
     $variables['attributes']['class'][] = 'ct_home';
