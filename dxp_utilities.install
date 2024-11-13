@@ -1,0 +1,10 @@
+<?php
+
+/**
+ * Implements hook_uninstall().
+ */
+function dxp_utilities_uninstall()
+{
+    // Delete the views configuration if it exists
+    \Drupal::configFactory()->getEditable('views.view.dxp_media')->delete();
+}
