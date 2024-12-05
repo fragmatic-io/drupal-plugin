@@ -62,6 +62,7 @@ class GetMedia extends ResourceBase {
 
     $media_storage = $this->entityTypeManager->getStorage('media');
     $query = $media_storage->getQuery()->accessCheck(TRUE);
+    $query->condition('bundle', 'image');
 
     if (!empty($name_filter)) {
       $query->condition('name', '%' . $name_filter . '%', 'LIKE');
