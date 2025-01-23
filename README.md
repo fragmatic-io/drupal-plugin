@@ -76,4 +76,7 @@ Add the following code snippet in the head section of html.html.twig file in you
 {% endif %}
 <!-- CT: end -->
 ```
+### 5. Add Form values to the config export
+
+Add the values of dxp_middleware_url and dxp_scope fields of the form to the export config to retain them while running any kind of deployments on the site.
 
