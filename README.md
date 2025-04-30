@@ -76,7 +76,11 @@ Add the following code snippet in the head section of html.html.twig file in you
 {% endif %}
 <!-- CT: end -->
 ```
+
+Note: When updating new tracker, make sure to remove the deprecated `<style data-dxpstyle="no-flicker">...</style>` tag.
+
 ### 5. Add Form values to the config_ignore
 
-Add the values of dxp_middleware_url and dxp_scope fields of the form to the config_ignore to retain them while running any kind of deployments on the site.
+Add the values of `dxp_middleware_url` and `dxp_scope` fields of the form to the config_ignore to retain them while running any kind of deployments on the site.
+
 
