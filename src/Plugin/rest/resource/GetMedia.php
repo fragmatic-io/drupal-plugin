@@ -56,12 +56,14 @@ class GetMedia extends ResourceBase {
     $items_per_page = 10;
     $current_page = \Drupal::request()->query->get('page', 0);
     $name_filter = \Drupal::request()->query->get('name', NULL);
+    $media_type = \Drupal::request()->query->get('type', 'image'); 
 
     $current_page = ($current_page < 0) ? 0 : $current_page;
     $start = $current_page * $items_per_page;
 
     $media_storage = $this->entityTypeManager->getStorage('media');
     $query = $media_storage->getQuery()->accessCheck(TRUE);
+    $query->condition('bundle', $media_type);
 
     if (!empty($name_filter)) {
       $query->condition('name', '%' . $name_filter . '%', 'LIKE');
@@ -78,14 +80,17 @@ class GetMedia extends ResourceBase {
     if (!empty($media_ids)) {
       $media_entities = $media_storage->loadMultiple($media_ids);
       foreach ($media_entities as $media) {
-        $field_media_image = $media->get('field_media_image')->entity;
-        $image_url = $field_media_image ? $this->fileUrlGenerator->generateAbsoluteString($field_media_image->getFileUri()) : '';
-
-        if ($field_media_image) {
-          $file_uri = $field_media_image->getFileUri();
-          $relative_path = str_replace('public://', '/sites/default/files/', $file_uri);
-        } else {
-          $relative_path = '';
+        $media_type = $media->bundle();
+        $image_url = '';
+        $relative_path = '';
+        
+        if ($media_type == 'image' && $media->hasField('field_media_image') && !$media->get('field_media_image')->isEmpty()) {
+          $field_media_image = $media->get('field_media_image')->entity;
+          if ($field_media_image) {
+            $file_uri = $field_media_image->getFileUri();
+            $image_url = $this->fileUrlGenerator->generateAbsoluteString($file_uri);
+            $relative_path = str_replace('public://', '/sites/default/files/', $file_uri);
+          }
         }
 
         $results[] = [
@@ -95,6 +100,7 @@ class GetMedia extends ResourceBase {
           'created' => \Drupal::service('date.formatter')->format($media->getCreatedTime(), 'custom', 'D, m/d/Y - H:i'),
           'mid' => $media->id(),
           'link' => $image_url,
+          'media_type' => $media_type,
         ];
       }
 
