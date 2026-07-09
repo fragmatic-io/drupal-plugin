@@ -1,0 +1,16 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - basic_auth
+    - serialization
+id: delete_media_entities
+plugin_id: delete_media_entities
+granularity: method
+configuration:
+  POST:
+    supported_formats:
+      - json
+    supported_auth:
+      - basic_auth
+      - cookie
